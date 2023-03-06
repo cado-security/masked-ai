@@ -1,26 +1,21 @@
 """
 """
-import re
-
-registered_masks = []
+from core.masks import _MaskBase
 
 
 class Masker:
     """
     """
     def __init__(self, data: str) -> None:
-        self.data = data
-
-        for mask in masks:
-
+        self.original_data = data
         self._mask_lookup = {}
 
-    def unmask_data(self) -> str:
-        """
-        """
-        return self.data
+        for mask in _MaskBase.__subclasses__:
+            data = mask.mask(data)
 
-    def ip_mask(self):
-        """"""
-        ip_candidates = re.findall(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", ip)
-        pass
+    def unmask_data(self, data: str) -> str:
+        """
+        """
+        for k, v in self._mask_lookup.items():
+            data.replace(k, v)
+        return data

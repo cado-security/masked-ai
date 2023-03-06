@@ -1,6 +1,7 @@
 # masked-openai
 Masked Python SDK wrapper for OpenAI API. Use public LLM APIs securely by reducing sensetive data before sending requests to OpenAI api, and then construct the data back before presenting to the user.
 
+![](docs/flow.png)
 
 ## Examples
 ```python
@@ -11,6 +12,7 @@ data = "Text with potential sensitive data"
 masker = Masker(data)
 respinse = openai(masker.masked())
 ```
+
 
 ## How to contribute:
 
