@@ -18,6 +18,7 @@ class Masker:
         """
         """
         self.original_data = data
+        self.masked_data = data
         self._mask_lookup = {}
         for mask in MaskBase.__subclasses__():
             if skip and mask.__name__ in skip:
@@ -25,13 +26,11 @@ class Masker:
                     logging.info(f'Skipping mask {mask.__name__}')
                 continue
 
-            to_mask = mask.find(data)
+            to_mask = mask.find(self.masked_data)
             for i, item in enumerate(to_mask):
                 lookup_name = f'<{mask.__name__}_{i+1}>'
                 self._mask_lookup[lookup_name] = item
-                data.replace(item, lookup_name)
-
-        self.masked_data = data
+                self.masked_data = self.masked_data.replace(item, lookup_name)
 
     def list_masks(self) -> list[str]:
         return [mask.__name__ for mask in MaskBase.__subclasses__()]
@@ -49,6 +48,10 @@ class Masker:
 
 if __name__ == "__main__":
     logging.info('ABC')
-    masker = Masker("this is a test 127.0.0.1 and my link is www.google.com")
+    data = "Adam Cohen Hillel this is a test 127.0.0.1 and my link is www.google.com"
+    print('data: ', data)
+    masker = Masker("Adam Cohen Hillel this is a test 127.0.0.1 and my link is www.google.com")
+    print('masked: ', masker.masked_data)
     lookup = masker.get_lookup()
-    print('************', lookup)
+    print('lookup: ', lookup)
+    print('unmasked: ', masker.unmask_data(masker.masked_data))

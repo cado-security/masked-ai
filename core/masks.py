@@ -5,6 +5,11 @@ from abc import ABC, abstractmethod
 from typing import Dict, Tuple
 
 import nltk
+
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 from nltk import ne_chunk, pos_tag, word_tokenize
 from nltk.tree import Tree
 
@@ -39,14 +44,14 @@ class NamesMask(MaskBase):
     @staticmethod
     def find(data: str) -> Tuple[str, Dict[str, str]]:
         nltk_results = ne_chunk(pos_tag(word_tokenize(data)))
-        found = []
+        names = []
         for nltk_result in nltk_results:
             if type(nltk_result) == Tree:
                 name = ''
                 for nltk_result_leaf in nltk_result.leaves():
-                    name += nltk_result_leaf[0] + ' '
-                print ('Type: ', nltk_result.label(), 'Name: ', name)
-        return found
+                    name += ' ' + nltk_result_leaf[0]
+                names.append(name)
+        return names
 
 
 class LinkMask(MaskBase):
