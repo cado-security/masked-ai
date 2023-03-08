@@ -3,7 +3,21 @@ Masked Python SDK wrapper for OpenAI API. Use public LLM APIs securely by reduci
 
 ![](docs/flow.png)
 
-## Examples
+## How to use
+
+CLI:
+If you want to use `masked-openai` using the CLI, you can do something as followed:
+```
+curl https://api.openai.com/v1/chat/completions \
+ -H "Authorization: Bearer $OPENAI_API_KEY" \
+ -H "Content-Type: application/json" \
+ -d '{
+ "model": "gpt-3.5-turbo",
+ "messages": [{"role": "user", "content": "What is the OpenAI mission?"}] 
+ }'
+```
+
+Python:
 ```python
 from masked_openai import Masker
 
@@ -15,7 +29,6 @@ respinse = openai(masker.masked())
 
 
 ## How to contribute:
-
 
 
 ## License
