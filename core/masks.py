@@ -43,15 +43,20 @@ class NamesMask(MaskBase):
     """
     @staticmethod
     def find(data: str) -> Tuple[str, Dict[str, str]]:
-        nltk_results = ne_chunk(pos_tag(word_tokenize(data)))
-        names = []
-        for nltk_result in nltk_results:
-            if type(nltk_result) == Tree:
-                name = ''
-                for nltk_result_leaf in nltk_result.leaves():
-                    name += ' ' + nltk_result_leaf[0]
-                names.append(name)
-        return names
+        sentt = nltk.ne_chunk(nltk.pos_tag(nltk.tokenize.word_tokenize(data)), binary=False)
+        person_list = []
+        person = []
+        name = ""
+        for subtree in sentt.subtrees(filter=lambda t: t.label() == 'PERSON'):
+            for leaf in subtree.leaves():
+                person.append(leaf[0])
+            for part in person:
+                name += part + ' '
+            if name[:-1] not in person_list:
+                person_list.append(name[:-1])
+            name = ''
+            person = []
+        return person_list
 
 
 class LinkMask(MaskBase):

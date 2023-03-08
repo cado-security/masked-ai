@@ -41,9 +41,10 @@ class Masker:
     def unmask_data(self, data: str) -> str:
         """
         """
+        unmasked = data
         for k, v in self._mask_lookup.items():
-            data.replace(k, v)
-        return data
+            unmasked = unmasked.replace(k, v)
+        return unmasked
 
 
 if __name__ == "__main__":
