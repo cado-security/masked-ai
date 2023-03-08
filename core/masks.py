@@ -33,6 +33,22 @@ class IPMask(MaskBase):
         return re.findall(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", data)
 
 
+class NamesMask(MaskBase):
+    """Persons names
+    """
+    @staticmethod
+    def find(data: str) -> Tuple[str, Dict[str, str]]:
+        nltk_results = ne_chunk(pos_tag(word_tokenize(data)))
+        found = []
+        for nltk_result in nltk_results:
+            if type(nltk_result) == Tree:
+                name = ''
+                for nltk_result_leaf in nltk_result.leaves():
+                    name += nltk_result_leaf[0] + ' '
+                print ('Type: ', nltk_result.label(), 'Name: ', name)
+        return found
+
+
 class LinkMask(MaskBase):
     """Web links
     """
