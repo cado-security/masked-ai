@@ -1,7 +1,7 @@
 # Masked-AI
 ![ci](https://github.com/cado-security/masked-ai/actions/workflows/app-ci.yml/badge.svg?branch=main)
 <!-- [![PyPI version](https://badge.fury.io/py/masked-ai.svg)](https://badge.fury.io/py/masked-ai) -->
-Masking data for OpenAI API. A Python SDK + CLI wrappers to enable the usage of public LLM APIs securely, by reducing sensetive data before sending requests to the API, and then construct the data back before presenting to the user.
+Masked-AI is a Python SDK and CLI wrappers that enable the usage of public LLM (Language Model) APIs securely. It does this by reducing sensitive data before sending requests to the API and then constructing the data back before presenting it to the user. This approach ensures that only the necessary information is sent to the API, reducing the risk of exposing sensitive data.
 
 ### Flow:
 ![](docs/flow.png)
@@ -72,4 +72,4 @@ class IPMask(MaskBase):
 And don't forget to add tests `tests/core/test_masks.py`! :)
 
 ## License
-This is licensed under the GPL. Please contact us if this does not work for your use case - we may be able to alternatively license under a non-copyleft license such as the Apache License. We're friendly! As this software is licensed under the GPL and used in our commercial product, we ask any contributors to sign a simple Contributor License Agreement (CLA).
+We make no gurantees as to the completeness of the redaction - you remain responsible for any data you send out. For more, please see the license in particular the sections on Warranty and Liability.
