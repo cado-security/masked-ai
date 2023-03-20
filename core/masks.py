@@ -88,4 +88,4 @@ class CreditCardMask(MaskBase):
     """
     @staticmethod
     def find(data: str) -> Tuple[str, Dict[str, str]]:
-        return re.findall(r'(\d{4})(-?)(\d{4})(\2\d{4}){2}', data)
+        return re.findall(r'\b(?:\d{4}-){3}\d{4}|\b\d{16}\b', data)

@@ -109,6 +109,5 @@ class MasksTests(unittest.TestCase):
         """
         data = "testing with 4012-8888-8882-1881"
         found = masks.CreditCardMask.find(data)
-        print('*********', found, '*********')
         self.assertEqual(len(found), 1)
-        self.assertTrue("4012888888881881" in found)
+        self.assertTrue("4012-8888-8882-1881" in found)
