@@ -1,12 +1,16 @@
-# masked-openai
+# masked-ai
 Masked Python SDK wrapper for OpenAI API. Use public LLM APIs securely by reducing sensetive data before sending requests to OpenAI api, and then construct the data back before presenting to the user.
 
 ![](docs/flow.png)
 
 ## How to use
 
-CLI:
-If you want to use `masked-openai` using the CLI, you can do something as followed:
+#### CLI:
+Download the binary and run:
+```
+maskedai --
+```
+And here is how you can use `masked-AI` CLI with OpenAI API:
 ```
 curl https://api.openai.com/v1/chat/completions \
  -H "Authorization: Bearer $OPENAI_API_KEY" \
@@ -17,7 +21,7 @@ curl https://api.openai.com/v1/chat/completions \
  }'
 ```
 
-Python:
+#### Python:
 ```python
 from masked_openai import Masker
 

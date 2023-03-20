@@ -34,43 +34,81 @@ class MasksTests(unittest.TestCase):
         found = masks.IPMask.find(data)
         self.assertEqual(len(found), 2)
         self.assertTrue("172.217.22.14" in found)
-        self.assertTrue("127.0.01" in found)
+        self.assertTrue("127.0.0.1" in found)
 
     def test_name_without_lastname(self):
-        pass
+        data = "Adam is going to do some cool shit in this world"
+        found = masks.NamesMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("Adam" in found)
 
     def test_name_with_lastname(self):
-        pass
+        data = "Adam Cohen is going to do some cool shit in this world"
+        found = masks.NamesMask.find(data)
+        self.assertEqual(len(found), 2)
+        self.assertTrue("Adam" in found)
+        self.assertTrue("Cohen" in found)
 
-    def test_name_wit_long_lastname(self):
-        pass
+    def test_name_with_long_lastname(self):
+        data = "Adam Cohen Hillel is going to do some cool shit in this world"
+        found = masks.NamesMask.find(data)
+        self.assertEqual(len(found), 2)
+        self.assertTrue("Adam" in found)
+        self.assertTrue("Cohen Hillel" in found)
+
+    def test_short_link(self):
+        data = "The user clicked on google.com"
+        found = masks.LinkMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("google.com" in found)
 
     def test_www_link(self):
-        pass
+        data = "The user clicked on www.google.com"
+        found = masks.LinkMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("www.google.com" in found)
 
-    def test_uk_phone_number(self):
-        pass
+    def test_http_link(self):
+        data = "The user clicked on https://www.google.com"
+        found = masks.LinkMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("https://www.google.com" in found)
 
-    def test_us_phone_number(self):
-        pass
+    def test_uk_international_phone_number(self):
+        data = "The user called +447831879184"
+        found = masks.PhoneMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("+447831879184" in found)
 
-    def test_no_zone_phone_number(self):
-        pass
+    def test_us_international_phone_number(self):
+        data = "The user called +12025550196"
+        found = masks.PhoneMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("+12025550196" in found)
 
-    def test_name_without_lastname(self):
-        pass
-
-    def test_name_without_lastname(self):
-        pass
-
-    def test_name_without_lastname(self):
-        pass
+    def test_no_international_phone_number(self):
+        data = "The user called 07831879184"
+        found = masks.PhoneMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("07831879184" in found)
 
     def test_email_gmail(self):
-        pass
+        data = "testing with thisisatest@gmail.com"
+        found = masks.EmailMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("thisisatest@gmail.com" in found)
 
     def test_not_known_mail_address(self):
-        pass
+        data = "testing with thisisatest@company.com"
+        found = masks.EmailMask.find(data)
+        self.assertEqual(len(found), 1)
+        self.assertTrue("thisisatest@company.com" in found)
 
     def test_credit_card(self):
-        pass
+        """From `https://www.paypalobjects.com/en_AU/vhelp/paypalmanager_help/credit_card_numbers.htm`
+        """
+        data = "testing with 4012-8888-8882-1881"
+        found = masks.CreditCardMask.find(data)
+        print('*********', found, '*********')
+        self.assertEqual(len(found), 1)
+        self.assertTrue("4012888888881881" in found)

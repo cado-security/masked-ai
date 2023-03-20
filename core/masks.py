@@ -83,9 +83,9 @@ class EmailMask(MaskBase):
         return re.findall(r"([a-z0-9!#$%&'*+\/=?^_`{|.}~-]+@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)", data)
 
 
-class CreditMask(MaskBase):
+class CreditCardMask(MaskBase):
     """Credit Card
     """
     @staticmethod
     def find(data: str) -> Tuple[str, Dict[str, str]]:
-        return re.findall(r'((?:(?:\\d{4}[- ]?){3}\\d{4}|\\d{15,16}))(?![\\d])', data)
+        return re.findall(r'(\d{4})(-?)(\d{4})(\2\d{4}){2}', data)

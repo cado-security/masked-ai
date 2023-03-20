@@ -2,6 +2,7 @@
 """
 import logging
 from typing import Optional
+import argparse
 
 from core.masks import MaskBase
 
@@ -48,6 +49,35 @@ class Masker:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Cado Security Masked-AI")
+    parser.add_argument(
+        "-T"
+        "--text",
+        action="store",
+        dest="text",
+        help="Text to mask before sending to 3rd party API",
+        default=None,
+    )
+    parser.add_argument(
+        "-C"
+        "--command",
+        action="store",
+        dest="text",
+        help="Command to run between mask and un masked",
+        default=None,
+    )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        dest="debug",
+        help="Print more logging",
+        default=False,
+    )
+    args = parser.parse_args()
+
+    if not args.text:
+        raise SystemExit('`text` must be provided')
+
     logging.info('ABC')
     data = "Adam Cohen Hillel this is a test 127.0.0.1 and my link is www.google.com"
     print('data: ', data)
