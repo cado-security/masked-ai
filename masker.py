@@ -1,8 +1,10 @@
 """
 """
+import sys
 import logging
 from typing import Optional
 import argparse
+import subprocess
 
 from core.masks import MaskBase
 
@@ -51,7 +53,6 @@ class Masker:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Cado Security Masked-AI")
     parser.add_argument(
-        "-T"
         "--text",
         action="store",
         dest="text",
@@ -59,13 +60,14 @@ if __name__ == "__main__":
         default=None,
     )
     parser.add_argument(
-        "-C"
         "--command",
         action="store",
-        dest="text",
+        dest="command",
         help="Command to run between mask and un masked",
         default=None,
     )
+    # parser.add_argument('command', metavar='CMD', type=str, nargs='+', help='Command to be run')
+
     parser.add_argument(
         "--debug",
         action="store_true",
@@ -75,14 +77,23 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    if not args.text:
-        raise SystemExit('`text` must be provided')
+    if not args.text or not args.command:
+        raise SystemExit('--text and --command must be provided')
 
-    logging.info('ABC')
-    data = "Adam Cohen Hillel this is a test 127.0.0.1 and my link is www.google.com"
-    print('data: ', data)
-    masker = Masker("Adam Cohen Hillel this is a test 127.0.0.1 and my link is www.google.com")
-    print('masked: ', masker.masked_data)
-    lookup = masker.get_lookup()
-    print('lookup: ', lookup)
-    print('unmasked: ', masker.unmask_data(masker.masked_data))
+    masker = Masker(args.text)
+    cleaned_command = args.command.replace('{replace}', masker.masked_data)
+
+    if args.debug:
+        print('Masking: ', args.text)
+        print('Masked: ', masker.masked_data)
+        print('Lookup: ', masker.get_lookup())
+        print("Running command: ", ' '.join(cleaned_command))
+
+    output = subprocess.check_output(cleaned_command, stderr=subprocess.STDOUT, shell=True)
+    output = output.decode('utf-8').strip()
+    unmask = masker.unmask_data(masker.masked_data)
+    if args.debug:
+        print('Raw output: ', output)
+        print('Unmask output: ', unmask)
+    sys.stdout.write(unmask)
+    sys.stdout.flush()
