@@ -20,13 +20,15 @@ curl https://api.openai.com/v1/completions -H "Content-Type: application/json" \
 ```
 Notes:
 * Don’t forget to change `<OPENAI_API_KEY>` to your own OpenAI key
-* The string `{replace}` in the curl command is where your safe, masked `--text` will go.
+* Masked-AI will look for the string `{replace}` in the command, and will replace it with the masked `--text`.
+
+Here is an example outout
 ![](docs/screenshot2.png)
 
 **So, what is happening here?**
-1. If we look at the output, the prompt that is actually being sent to the API (marked with blue) is `Hello, my name is <NamesMask_1>, say my name`, Masked-AI replace the name “Adam” with a placholder
-2. Then if we look at the raw return value from the cURL command (the important part is marked in red), we can see that OpenAI returned the following completion: `Hello, <NamesMask_1>!"` 
-3. Lastly, the reconstruction stage (marked purple), where Masked-AI takes the output, and replace the placeholders back with the real data, which in this case, `Hello, Adam!`
+1. If we look at the output, the prompt that is actually being sent to the API (marked with **<span style="color:blue">blue</span>**) is `Hello, my name is <NamesMask_1>, say my name`, Masked-AI replace the name “Adam” with a placholder
+2. Then if we look at the raw return value from the cURL command (the important part is marked in **<span style="color:red">red</span>**), we can see that OpenAI returned the following completion: `Hello, <NamesMask_1>!"` 
+3. Lastly, the reconstruction stage (marked **<span style="color:purple">purple</span>**), where Masked-AI takes the output, and replace the placeholders back with the real data, which in this case, `Hello, Adam!`
 Simple example, showing how we can still use LLMs, leverage their great power, without sending out sensitive information.
 
 ### 3. Example 3: Same as the above, but with Python:
