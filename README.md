@@ -4,7 +4,7 @@
 Masked-AI is a Python SDK and CLI wrappers that enable the usage of public LLM (Language Model) APIs securely. It does this by reducing sensitive data before sending requests to the API and then constructing the data back before presenting it to the user. This approach ensures that only the necessary information is sent to the API, reducing the risk of exposing sensitive data.
 
 ### Flow:
-![](docs/flow.png)
+![](docs/flow.svg)
 
 ## How to use
 You can use the CLIO tool with
