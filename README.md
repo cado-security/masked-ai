@@ -9,10 +9,10 @@ Masked-AI is a Python SDK and CLI wrappers that enable the usage of public LLM (
 ## How to use
 You can deploy Mask-AI straight from pip (“pip3 install mask-ai”) or from our GitHub repo. It can be used as both a python library or over the CLI.
 
-1. Example 1: Simple ‘echo’ command with Masked-AI:
+#### 1. Example 1: Simple ‘echo’ command with Masked-AI:
 ![](docs/screenshot1.png)
 
-2. Example 2: OpenAI Completion API cURL command + Masked-AI CLI tool:
+####  2. Example 2: OpenAI Completion API cURL command + Masked-AI CLI tool:
 ```bash
 python3 masker.py --debug --text "Hello, my name is Adam, say my name" curl https://api.openai.com/v1/completions -H "Content-Type: application/json" -H "Authorization: Bearer <OPENAI_API_KEY>" -d '{"model": "text-davinci-003", "prompt": "{replace}"}'
 ```
@@ -21,13 +21,13 @@ Notes:
 * The string `{replace}` in the curl command is where your safe, masked `--text` will go.
 ![](docs/screenshot2.png)
 
-### So, what is happening here?
+**So, what is happening here?**
 1. If we look at the output, the prompt that is actually being sent to the API (marked with blue) is `Hello, my name is <NamesMask_1>, say my name`, Masked-AI replace the name “Adam” with a placholder
 2. Then if we look at the raw return value from the cURL command (the important part is marked in red), we can see that OpenAI returned the following completion: `Hello, <NamesMask_1>!"` 
 3. Lastly, the reconstruction stage (marked purple), where Masked-AI takes the output, and replace the placeholders back with the real data, which in this case, `Hello, Adam!`
 Simple example, showing how we can still use LLMs, leverage their great power, without sending out sensitive information.
 
-3. Example 3: Same as the above, but with Python:
+#### 3. Example 3: Same as the above, but with Python:
 
 ```python
 import os
