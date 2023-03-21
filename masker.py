@@ -74,7 +74,6 @@ if __name__ == "__main__":
         print(" - After masking: ", masker.masked_data)
         print(" - Lookup: ", masker.get_lookup())
         print(" - COMMAND: ", "".join(cleaned_command))
-        print("Running command...")
 
     output = subprocess.check_output(cleaned_command, stderr=subprocess.STDOUT, shell=True)
     output = output.decode("utf-8").strip()
@@ -85,6 +84,6 @@ if __name__ == "__main__":
         print('-------')
         print(" - Unmask output: ", unmask)
         print("************************************")
-
-    sys.stdout.write(unmask)
-    sys.stdout.flush()
+    else:
+        sys.stdout.write(unmask)
+        sys.stdout.flush()

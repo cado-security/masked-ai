@@ -7,28 +7,28 @@ Masked-AI is a Python SDK and CLI wrappers that enable the usage of public LLM (
 ![](docs/flow.svg)
 
 ## How to use
-You can use the CLIO tool with
-#### CLI:
-Download the binary and run:
-**Note:** that in the command argument, there is a special string `{replace}`, this is what `Masked-AI` will replace the safe string with
+You can deploy Mask-AI straight from pip (“pip3 install mask-ai”) or from our GitHub repo. It can be used as both a python library or over the CLI.
+
+1. Example 1: Simple ‘echo’ command with Masked-AI:
+![](docs/screenshot1.svg)
+
+2. Example 2: OpenAI Completion API cURL command + Masked-AI CLI tool:
 ```bash
-masker --text "This is a text I want to mask, for example my name Adam" --command "echo {replace}"
+python3 masker.py --debug --text "Hello, my name is Adam, say my name" curl https://api.openai.com/v1/completions -H "Content-Type: application/json" -H "Authorization: Bearer <OPENAI_API_KEY>" -d '{"model": "text-davinci-003", "prompt": "{replace}"}'
 ```
+Notes:
+* Don’t forget to change `<OPENAI_API_KEY>` to your own OpenAI key
+* The string `{replace}` in the curl command is where your safe, masked `--text` will go.
 
-And here is how you can use `Masked-AI` CLI with OpenAI API:
-```
-masker --text "This is a text I want to mask, for example my name Adam" --command " \
-curl https://api.openai.com/v1/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
-  -d '{"model": "text-davinci-003", "prompt": {replace}}' \
-"
-Again, note the `{replace}` string in the curl command, where your safe, masked `--text` will go.
-The output of the command will be the return value from [OpenAI API](https://platform.openai.com/docs/api-reference/completions/create), but after `masked-ai` has reconsrcueted it using the lookup. Use `--debug` to see the steps more clearly
-```
+![](docs/screenshot2.svg)
+### So, what is happening here?
+1. If we look at the output, the prompt that is actually being sent to the API (marked with blue) is `Hello, my name is <NamesMask_1>, say my name`, Masked-AI replace the name “Adam” with a placholder
+2. Then if we look at the raw return value from the cURL command (the important part is marked in red), we can see that OpenAI returned the following completion: `Hello, <NamesMask_1>!"` 
+3. Lastly, the reconstruction stage (marked purple), where Masked-AI takes the output, and replace the placeholders back with the real data, which in this case, `Hello, Adam!`
+Simple example, showing how we can still use LLMs, leverage their great power, without sending out sensitive information.
 
-#### Python:
-If you want to use it within your Python code, you can do the following
+3. Example 3: Same as the above, but with Python:
+
 ```python
 import os
 import openai
@@ -37,22 +37,11 @@ from masked_ai import Masker
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-debug = False
-data = "Text with potential sensitive data"
-
-masker = Masker(data)
-
-if debug:
-    print('Masking: ', data)
-    print('Masked: ', masker.masked_data)
-    print('Lookup: ', masker.get_lookup())
-
+text = "Hello, my name is Adam, say my name"
+masker = Masker(text)
 response = openai.Completion.create(model="text-davinci-003", prompt=masker.masked_data)
+unmask = masker.unmask_data(response)
 
-if debug:
-    print('Raw response: ', response)
-
-unmasked = masker.unmask_data(response)
 print('Result:', unmasked)
 ```
 
@@ -61,6 +50,7 @@ print('Result:', unmasked)
 The main area to contribute is to add more Masks, for example, we currently have: `IPMask`, `EmailMask`, `CreditCardMask`, and more - but there is always more to add.
 Clone the repo, create a new branch, and simply go to `core/masks.py`, create a new class that inherent from `MaskBase` (in the same module), and implement the `find` method: `def find(data: str) -> Tuple[str, Dict[str, str]]:`. Once you created the class, it will automatically be part of the masking process.
 Here is an example for masking IP addresses:
+
 ```Python
 class IPMask(MaskBase):
     """IP addresses
