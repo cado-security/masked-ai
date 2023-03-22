@@ -2,7 +2,14 @@
 """
 import unittest
 
-from core.masks import *
+from core.masks import (
+    IPMask,
+    NamesMask,
+    LinkMask,
+    CreditCardMask,
+    EmailMask,
+    PhoneMask
+)
 
 
 class MasksTests(unittest.TestCase):
