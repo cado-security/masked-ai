@@ -6,7 +6,7 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 
 setup(
     name='masked_ai',
@@ -18,7 +18,7 @@ setup(
     author_email='maskedai@cadosecurity.com',
     url='https://github.com/cado-security/masked-ai',
     download_url='https://github.com/cado-security/masked-ai/archive/refs/heads/main.zip',
-    py_modules=['masked-ai'],
+    py_modules=['masked_ai'],
     install_requires=['nltk'],
     packages=find_packages()
 )
