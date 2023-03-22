@@ -6,10 +6,10 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 setup(
-    name='masked-ai',
+    name='masked_ai',
     version=VERSION,
     description='Masked AI',
     long_description=long_description,
