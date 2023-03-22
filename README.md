@@ -14,7 +14,7 @@ Note that we make no gurantees as to the completeness of the redaction - you rem
 
 ### Flow:
 
-![](docs/flow.svg)
+![](docs/flow2.png)
 
   
 
