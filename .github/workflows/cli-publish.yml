@@ -14,7 +14,9 @@ jobs:
       with:
         python-version: '3.10'
     - name: Setup Environment
-      run: pip3 install -r ./requirements.txt
+      run: |
+        pip3 install -r ./requirements.txt
+        pip3 install pyinstaller==5.6.2
     - name: build artifacts
       run: pyinstaller --onefile --clean masker.py
     - name: Upload binary
