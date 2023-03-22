@@ -1,0 +1,86 @@
+name: Compile CLI Tools
+on:
+  release:
+    types: [created]
+
+jobs:  
+  linux:
+    name: Build Linux CLI Release Asset
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+    - name: Setup Environment
+      run: pip3 install -r ./requirements.txt
+    - name: build artifacts
+      run: python3 -m pyinstaller --onefile --clean masker.py
+    - name: Upload binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/masker
+        asset_name: masker_linux
+        asset_content_type: application/octet-stream
+  
+    # - name: upload darwin artifact
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ github.token }}
+    #   with:
+    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+    #     asset_path: ./bin/azblogfilter.darwin-amd64.tar.gz
+    #     asset_name: azblogfilter.darwin-amd64.tar.gz
+    #     asset_content_type: application/gzip
+    # - name: upload windows artifact
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ github.token }}
+    #   with:
+    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+    #     asset_path: ./bin/azblogfilter.windows-amd64.zip
+    #     asset_name: azblogfilter.windows-amd64.zip
+    #     asset_content_type: application/zip
+      
+  # windows:
+  #   runs-on: windows-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v3
+  #     with:
+  #       python-version: '3.10'
+  #   - name: Setup Environment
+  #     run: |
+  #       pip3 install -r ./requirements.txt
+  #   - name: Run Pyinstaller
+  #     run: |
+  #       python3 -m PyInstaller --onefile ../masker.py
+  #   - name: Upload Release Asset
+  #       uses: actions/upload-release-asset@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ github.event.release.upload_url }} 
+  #         asset_path: ./path/file.ext
+  #         asset_name: AssetName
+  #         asset_content_type: application/octet-stream\
+  
+  # macos:
+  #   runs-on: macos-12
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v3
+  #     with:
+  #       python-version: '3.10'
+  #   - name: Setup Environment
+  #     run: |
+  #       pip3 install -r ./requirements.txt
+  #   - name: Run varc Python
+  #     run: |
+  #       python3 varc.py
