@@ -19,7 +19,7 @@ Note that we make no gurantees as to the completeness of the redaction - you rem
 
 ## How to use
 
-You can deploy Mask-AI straight from pip ("pip3 install mask-ai") or from our GitHub repo ("python3 setup.py install"). It can be used as both a python library or over the CLI.
+You can deploy Masked-AI straight from pip ("pip3 install masked-ai") or from our GitHub repo ("python3 setup.py install"). It can be used as both a python library or over the CLI.
 
  
 
