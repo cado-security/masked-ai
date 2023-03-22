@@ -16,7 +16,7 @@ jobs:
     - name: Setup Environment
       run: pip3 install -r ./requirements.txt
     - name: build artifacts
-      run: python3 -m pyinstaller --onefile --clean masker.py
+      run: pyinstaller --onefile --clean masker.py
     - name: Upload binary
       uses: actions/upload-release-asset@v1
       env:
