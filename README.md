@@ -20,11 +20,11 @@ Note that we make no gurantees as to the completeness of the redaction - you rem
 
 ## How to use
 
-You can deploy Mask-AI straight from pip (“pip3 install mask-ai”) or from our GitHub repo ("python3 setup.py install"). It can be used as both a python library or over the CLI.
+You can deploy Masked-AI straight from pip ("pip3 install masked-ai") or from our GitHub repo ("python3 setup.py install"). It can be used as both a python library or over the CLI.
 
  
 
-### 1. Example 1: Simple ‘echo’ command with Masked-AI:
+### 1. Example 1: Simple `echo' command with Masked-AI:
 
 ![](docs/screenshot1.png)
 
@@ -44,7 +44,7 @@ curl https://api.openai.com/v1/completions  -H  "Content-Type: application/json"
 
 Notes:
 
-* Don’t forget to change `<OPENAI_API_KEY>` to your own OpenAI key
+* Don't forget to change `<OPENAI_API_KEY>` to your own OpenAI key
 
 * Masked-AI will look for the string `{replace}` in the command, and will replace it with the masked `--text`.
 
@@ -58,7 +58,7 @@ Here is an example outout
 
 **So, what is happening here?**
 
-1. If we look at the output, the prompt that is actually being sent to the API (marked with <span style="color:#ff0000">blue</span>) is `Hello, my name is <NamesMask_1>, say my name`, Masked-AI replaces the name “Adam” with a placholder.
+1. If we look at the output, the prompt that is actually being sent to the API (marked with <span style="color:#ff0000">blue</span>) is `Hello, my name is <NamesMask_1>, say my name`, Masked-AI replaces the name "Adam" with a placholder.
 
 2. Then if we look at the raw return value from the cURL command (the important part is marked in <span style="color:red">red</span>), we can see that OpenAI returned the following completion: `Hello, <NamesMask_1>!"`
 
