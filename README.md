@@ -7,6 +7,7 @@ It does this by:
 1. Replacing sensitive data (for example e-mail addresses) with fake data in it's place
 2. Sending the request to the API
 3. The replacing the sensitive data back into the output
+
 The result is that you get the same output from the API, without having to send the sensitive data.
 
 Note that we make no gurantees as to the completeness of the redaction - you remain responsible for any data you send out. For more, please see the the License.
