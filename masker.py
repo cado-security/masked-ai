@@ -38,7 +38,7 @@ class Masker:
     def list_masks(self) -> list[str]:
         return [mask.__name__ for mask in MaskBase.__subclasses__()]
 
-    def get_lookup(self):
+    def get_lookup(self) -> dict:
         return self._mask_lookup
 
     def unmask_data(self, data: str) -> str:
@@ -75,8 +75,8 @@ if __name__ == "__main__":
         print(" - Lookup: ", masker.get_lookup())
         print(" - COMMAND: ", "".join(cleaned_command))
 
-    output = subprocess.check_output(cleaned_command, stderr=subprocess.STDOUT, shell=True)
-    output = output.decode("utf-8").strip()
+    output_bytes = subprocess.check_output(cleaned_command, stderr=subprocess.STDOUT, shell=True)
+    output = output_bytes.decode("utf-8").strip()
     unmask = masker.unmask_data(output)
 
     if args.debug:
