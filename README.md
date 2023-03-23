@@ -32,15 +32,7 @@ You can deploy Masked-AI straight from pip ("pip3 install masked-ai") or from ou
 
 ### 2. Example 2: OpenAI Completion API cURL command + Masked-AI CLI tool:
 
-```bash
-
-python3 masker.py  --debug  --text  "Hello, my name is Adam, say my name"  \
-
-curl https://api.openai.com/v1/completions  -H  "Content-Type: application/json"  \
-
--H "Authorization: Bearer <OPENAI_API_KEY>"  -d  '{"model": "text-davinci-003", "prompt": "{replace}"}'
-
-```
+```python3 masker.py  --debug  --text  "Hello, my name is Adam, say my name" curl https://api.openai.com/v1/completions  -H  "Content-Type: application/json" -H "Authorization: Bearer <OPENAI_API_KEY>"  -d  '{"model": "text-davinci-003", "prompt": "{replace}"}'```
 
 Notes:
 
@@ -68,7 +60,6 @@ Here is an example outout
 
 ### 3. Example 3: Same as the above, but with Python:
 
-  
 
 ```python
 import os
@@ -77,13 +68,20 @@ from masked_ai import Masker
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.getenv("OPENAI_API_KEY")
-text =  "Hello, my name is Adam, say my name"
-masker = Masker(text)
-# This sends "Hello, my name is <NamesMask_1>, say my name" to OpenAI
-response = openai.Completion.create(model="text-davinci-003", prompt=masker.masked_data)
-unmask = masker.unmask_data(response)
-# This prints "Hello, Adam!"
+data = "My name is Adam and my IP address is 8.8.8.8. Now, write a one line poem:"
+masker = Masker(data)
+print('Masked: ', masker.masked_data)
+response = openai.Completion.create(
+    model="text-davinci-003",
+    prompt=masker.masked_data,
+    temperature=0,
+    max_tokens=1000,
+)
+generated_text = response.choices[0].text
+print('Raw response: ', response)
+unmasked = masker.unmask_data(generated_text)
 print('Result:', unmasked)
+
 ```
 
   
