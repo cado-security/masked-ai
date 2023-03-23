@@ -7,7 +7,7 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 
-RELEASE_VERSION = os.environ.get('VERSION', None)
+RELEASE_VERSION = os.environ.get('RELEASE_VERSION', None)
 
 if not RELEASE_VERSION:
     raise ValueError('VERSION environment variable not set')
