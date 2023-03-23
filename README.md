@@ -32,7 +32,9 @@ You can deploy Masked-AI straight from pip ("pip3 install masked-ai") or from ou
 
 ### 2. Example 2: OpenAI Completion API cURL command + Masked-AI CLI tool:
 
-```masker --debug  --prompt  "Hello, my name is Adam, say my name" curl https://api.openai.com/v1/completions  -H  "Content-Type: application/json" -H "Authorization: Bearer <OPENAI_API_KEY>"  -d  '{"model": "text-davinci-003", "prompt": "{prompt_placeholder}"}'```
+```
+./masker --debug --prompt "Hello, my name is Adam, say my name" curl https://api.openai.com/v1/completions  -H  "Content-Type: application/json" -H "Authorization: Bearer <OPENAI_API_KEY>"  -d  '{"model": "text-davinci-003", "prompt": "{prompt_placeholder}"}'
+```
 
 Notes:
 
