@@ -32,6 +32,9 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install twine==4.0.2
         python -m pip install build
+    - name: Set output
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
     - name: Build package
       env:
         RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
