@@ -1,3 +1,4 @@
+import os
 from setuptools import setup, find_packages
 
 # read the contents of your README file
@@ -6,7 +7,12 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 
-VERSION = '1.0.4'
+RELEASE_VERSION = os.environ.get('VERSION', None)
+
+if not RELEASE_VERSION:
+    raise ValueError('VERSION environment variable not set')
+
+print(f'Building version: {RELEASE_VERSION}')
 
 setup(
     name='masked_ai',

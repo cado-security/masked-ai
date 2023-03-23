@@ -32,6 +32,8 @@ jobs:
         python -m pip install twine==4.0.2
         python -m pip install build
     - name: Build package
+      env:
+        RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
       run: |
         python setup.py sdist
     - name: Publish package
