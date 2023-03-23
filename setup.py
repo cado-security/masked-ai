@@ -16,7 +16,7 @@ print(f'Building version: {RELEASE_VERSION}')
 
 setup(
     name='masked_ai',
-    version=VERSION,
+    version=RELEASE_VERSION,
     description='Masked AI',
     long_description=long_description,
     long_description_content_type='text/markdown',
