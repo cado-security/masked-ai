@@ -32,13 +32,13 @@ You can deploy Masked-AI straight from pip ("pip3 install masked-ai") or from ou
 
 ### 2. Example 2: OpenAI Completion API cURL command + Masked-AI CLI tool:
 
-```python3 masker.py  --debug  --text  "Hello, my name is Adam, say my name" curl https://api.openai.com/v1/completions  -H  "Content-Type: application/json" -H "Authorization: Bearer <OPENAI_API_KEY>"  -d  '{"model": "text-davinci-003", "prompt": "{replace}"}'```
+```masker --debug  --prompt  "Hello, my name is Adam, say my name" curl https://api.openai.com/v1/completions  -H  "Content-Type: application/json" -H "Authorization: Bearer <OPENAI_API_KEY>"  -d  '{"model": "text-davinci-003", "prompt": "{prompt_placeholder}"}'```
 
 Notes:
 
 * Don't forget to change `<OPENAI_API_KEY>` to your own OpenAI key
 
-* Masked-AI will look for the string `{replace}` in the command, and will replace it with the masked `--text`.
+* Masked-AI will look for the string `{prompt_placeholder}` in the command, and will replace it with the masked `--prompt`.
 
   
 
@@ -81,11 +81,8 @@ generated_text = response.choices[0].text
 print('Raw response: ', response)
 unmasked = masker.unmask_data(generated_text)
 print('Result:', unmasked)
-
 ```
-
-  
-  
+ 
 
 ## How to contribute:
 
@@ -97,20 +94,11 @@ Here is an example for masking IP addresses:
 
   
 
-```Python
-
+```python
 class  IPMask(MaskBase):
-
-"""IP addresses
-
-"""
-
-@staticmethod
-
-def  find(data: str) -> Tuple[str, Dict[str, str]]:
-
-return re.findall(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", data)
-
+    @staticmethod
+    def  find(data: str) -> Tuple[str, Dict[str, str]]:
+        return re.findall(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", data)
 ```
 
 And don't forget to add tests `tests/core/test_masks.py`! :)

@@ -1,2 +1,2 @@
 python3 -m pip install -r ../requirements.txt
-python3 -m PyInstaller --onefile ../masker.py
+python3 -m PyInstaller --onefile ../masked_ai/masker.py
