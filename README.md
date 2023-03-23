@@ -6,7 +6,7 @@ Masked-AI is a Python SDK and CLI wrappers that enable the usage of public LLM (
 It does this by:
 1. Replacing sensitive data (for example e-mail addresses) with fake data in it's place
 2. Sending the request to the API
-3. The replacing the sensitive data back into the output
+3. Then replacing the sensitive data back into the output
 
 The result is that you get the same output from the API, without having to send the sensitive data.
 
