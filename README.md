@@ -114,4 +114,4 @@ And don't forget to add tests `tests/core/test_masks.py`! :)
    * Update Python PyPi Package (file: `python-publish.yml`)
    * Compile CLI Tools (file: `cli-publish.yml`)
 5. Whereas the PyPi package will automatically be updated once its workflow finished, you'd need to manually copy the CLI artifacts from the "Compile CLI Tools" workflow. Just go to Actions -> click the latest "Compile CLI Tools" -> download the artifacts and upload them tp the release you just created (https://github.com/cado-security/masked-ai/releases)
-
+![](docs/actions_screenshot.png)
