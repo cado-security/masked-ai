@@ -3,9 +3,10 @@ on:
   release:
     types: [published]
 
-jobs:  
-  linux:
-    name: Build Linux CLI Release Asset
+jobs:
+
+  linux-cli-builder:
+    name: Build Linux CLI Release
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -19,16 +20,12 @@ jobs:
         pip3 install pyinstaller==5.6.2
     - name: build artifacts
       run: pyinstaller --onefile --clean ./masked_ai/masker.py
-    - name: Upload binary
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+    - name: Make artifacts downloadable
+      uses: actions/upload-artifact@v3
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/masker
-        asset_name: masker_linux
-        asset_content_type: application/octet-stream
-  
+        name: my-artifact
+        path: ./dist/masker
+
     # - name: upload darwin artifact
     #   uses: actions/upload-release-asset@v1
     #   env:
