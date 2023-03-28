@@ -1,17 +1,13 @@
 name: Update Python PyPi Package
-
 on:
   release:
     types: [published]
 
-permissions:
-  contents: read
-
 jobs:
+
   deploy:
-
+    name: Release to PyPi
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -24,10 +20,10 @@ jobs:
         python -m pip install twine==4.0.2
         python -m pip install build
     - name: Set output
-        run: echo "${github.ref#refs/tags/}"
+        run: echo "tag=${github.ref#refs/tags/}" >> $GITHUB_OUTPUT
     - name: Build package
       env:
-        RELEASE_VERSION: ${github.ref#refs/tags/}
+        RELEASE_VERSION: $GITHUB_OUTPUT
       run: |
         python setup.py sdist
     - name: Publish package
