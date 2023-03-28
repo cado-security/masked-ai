@@ -23,64 +23,47 @@ jobs:
     - name: Make artifacts downloadable
       uses: actions/upload-artifact@v3
       with:
-        name: my-artifact
+        name: linux-cli
         path: ./dist/masker
-
-    # - name: upload darwin artifact
-    #   uses: actions/upload-release-asset@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ github.token }}
-    #   with:
-    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-    #     asset_path: ./bin/azblogfilter.darwin-amd64.tar.gz
-    #     asset_name: azblogfilter.darwin-amd64.tar.gz
-    #     asset_content_type: application/gzip
-    # - name: upload windows artifact
-    #   uses: actions/upload-release-asset@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ github.token }}
-    #   with:
-    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-    #     asset_path: ./bin/azblogfilter.windows-amd64.zip
-    #     asset_name: azblogfilter.windows-amd64.zip
-    #     asset_content_type: application/zip
-      
-  # windows:
-  #   runs-on: windows-latest
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Set up Python
-  #     uses: actions/setup-python@v3
-  #     with:
-  #       python-version: '3.10'
-  #   - name: Setup Environment
-  #     run: |
-  #       pip3 install -r ./requirements.txt
-  #   - name: Run Pyinstaller
-  #     run: |
-  #       python3 -m PyInstaller --onefile ../masker.py
-  #   - name: Upload Release Asset
-  #       uses: actions/upload-release-asset@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         upload_url: ${{ github.event.release.upload_url }} 
-  #         asset_path: ./path/file.ext
-  #         asset_name: AssetName
-  #         asset_content_type: application/octet-stream\
-  
-  # macos:
-  #   runs-on: macos-12
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Set up Python
-  #     uses: actions/setup-python@v3
-  #     with:
-  #       python-version: '3.10'
-  #   - name: Setup Environment
-  #     run: |
-  #       pip3 install -r ./requirements.txt
-  #       pip3 install pyinstaller==5.6.2
-  #   - name: Run varc Python
-  #     run: |
-  #       pyinstaller  --onefile --clean --target-arch universal2 masked_ai/masker.py
+    
+    windows-cli-builder:
+      name: Build Windows CLI Release
+      runs-on: windows-latest
+      steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+      - name: Setup Environment
+        run: |
+          pip3 install -r ./requirements.txt
+          pip3 install pyinstaller==5.6.2
+      - name: build artifacts
+        run: pyinstaller --onefile --clean .\masked_ai\masker.py
+      - name: Make artifacts downloadable
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-cli
+          path: ./dist/masker
+    
+    macos-cli-builder:
+      name: Build MacOS CLI Release
+      runs-on: macos-12
+      steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+      - name: Setup Environment
+        run: |
+          pip3 install -r ./requirements.txt
+          pip3 install pyinstaller==5.6.2
+      - name: build artifacts
+        run: pyinstaller --onefile --clean --target-arch universal2 ./masked_ai/masker.py
+      - name: Make artifacts downloadable
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-cli
+          path: ./dist/masker
