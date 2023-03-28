@@ -45,7 +45,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: windows-cli
-        path: .\dist\masker
+        path: .\dist\masker.exe
   
   macos-cli-builder:
     name: Build MacOS CLI Release

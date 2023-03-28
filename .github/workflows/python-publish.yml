@@ -1,9 +1,8 @@
-name: Upload Python Package
+name: Update Python PyPi Package
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -25,11 +24,10 @@ jobs:
         python -m pip install twine==4.0.2
         python -m pip install build
     - name: Set output
-        id: vars
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        run: echo "${github.ref#refs/tags/}"
     - name: Build package
       env:
-        RELEASE_VERSION: $GITHUB_REF_NAME
+        RELEASE_VERSION: ${github.ref#refs/tags/}
       run: |
         python setup.py sdist
     - name: Publish package
