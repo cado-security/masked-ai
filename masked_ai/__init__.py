@@ -1,1 +1,1 @@
-from .masker import Masker
+from .masker import Masker  # noqa: F401
