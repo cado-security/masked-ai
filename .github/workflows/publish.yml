@@ -1,11 +1,11 @@
-name: Publish Release & Build CLI Tools
+name: Create new Release
 on:
   release:
     types: [published]
 
 jobs:
 
-  publish-to-pypi:
+  upload-to-pypi:
     name: Release to PyPi
     runs-on: ubuntu-latest
     steps:
