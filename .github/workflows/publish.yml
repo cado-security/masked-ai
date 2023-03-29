@@ -20,7 +20,7 @@ jobs:
         python -m pip install twine==4.0.2
         python -m pip install build
     - name: Set output
-      run: echo "${github.ref#refs/tags/}" >> $GITHUB_OUTPUT
+      run: echo ${GITHUB_REF##*/} >> $GITHUB_OUTPUT
     - name: Build package
       env:
         RELEASE_VERSION: $GITHUB_OUTPUT
