@@ -110,8 +110,5 @@ And don't forget to add tests `tests/core/test_masks.py`! :)
 1. Go to the Repo's Releases page (https://github.com/cado-security/masked-ai/releases) - and click "Draft a new release"
 2. Make the tag and the name of the release follow the following format: [Major].[Minor].[Patch] (i.e. 1.0.0)
 3. Add release notes to the description and click "Publish Release"
-4. This will kick off 2 GitHub Action Workflows:
-   * Update Python PyPi Package (file: `python-publish.yml`)
-   * Compile CLI Tools (file: `cli-publish.yml`)
-5. Whereas the PyPi package will automatically be updated once its workflow finished, you'd need to manually copy the CLI artifacts from the "Compile CLI Tools" workflow. Just go to Actions -> click the latest "Compile CLI Tools" -> download the artifacts and upload them tp the release you just created (https://github.com/cado-security/masked-ai/releases)
-![](docs/actions_screenshot.png)
+4. This will kick off a GitHub Action Workflow named `publish.yml` with 4 steps: Linux, Windows, MacOS and Pypi
+5. The PyPi stage will automatically upload package, but for the CLI tools you'd need to manually copy the artifacts from the workflow to the release notes you just created
