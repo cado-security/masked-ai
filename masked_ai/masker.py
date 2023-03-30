@@ -6,7 +6,7 @@ from typing import Optional
 import argparse
 import subprocess
 
-from core.masks import MaskBase
+from masked_ai.core.masks import MaskBase
 
 
 class Masker:
