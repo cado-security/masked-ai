@@ -2,7 +2,7 @@
 """
 import unittest
 
-from masked_ai.core.masks import (
+from core.masks import (
     IPMask,
     NamesMask,
     LinkMask,
