@@ -29,5 +29,4 @@ jobs:
         flake8 --config ./ci/flake8.cfg
     - name: Unit Tests
       run: |
-        cd ./masked_ai
         python3 -m unittest discover tests
